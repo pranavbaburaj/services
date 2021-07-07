@@ -8,6 +8,7 @@ var hello = document.querySelector(".message");
 
 
 send.addEventListener('click', () => {
+  if(hello.value.length.trim() == 0){return null}
   socket.emit("chat", {
     message : hello.value,
     handle : "daat",
