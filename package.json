@@ -1,0 +1,33 @@
+{
+  "name": "simple-chat-app",
+  "version": "1.0.0",
+  "description": "### This is a really basic chat application built out of [express js](https://expressjs.com/) and [socket.io](https://socket.io/). ###### Check it out [here](https://chat-pranavbaburaj.herokuapp.com/):octocat:",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "peer": "^0.6.1",
+    "socket.io": "^4.1.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pranavbaburaj/simple-chat-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pranavbaburaj/simple-chat-app/issues"
+  },
+  "homepage": "https://github.com/pranavbaburaj/simple-chat-app#readme"
+}
