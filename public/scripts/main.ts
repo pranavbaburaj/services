@@ -1,8 +1,8 @@
 import EventListeners from "./listeners.js";
 
-const createUUID = ():string => {
-  let date:number = new Date().getTime();
-  const uuid:string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+const createUUID = (): string => {
+  let date: number = new Date().getTime();
+  const uuid: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
     /[xy]/g,
     function (c) {
       const r = (date + Math.random() * 16) % 16 | 0;
@@ -13,7 +13,7 @@ const createUUID = ():string => {
   return uuid;
 };
 
-const createRoom = ():void => {
+const createRoom = (): void => {
   const roomUUID = createUUID();
   window.location.href = "/join/" + roomUUID;
 };
