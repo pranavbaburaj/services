@@ -1,24 +1,35 @@
-import cookieParser from "cookie-parser";
-import express, { Response, Request } from "express";
-import { join } from "path";
+import express, { Express, Request, Response } from 'express'
+import { Server } from 'http'
+import cookieParser from 'cookie-parser';
+import { join } from 'path';
+import { randomUUID } from 'crypto';
 
-const application = express();
-const PORT = process.env.PORT || 3000;
+const app:Express = express();
+const server:Server = new Server(app);
+const io:any = require("socket.io")(server);
 
-const TEMPLATE_PATH = join(__dirname, "public");
-application.use(express.static(TEMPLATE_PATH));
-application.use(cookieParser());
+app.use(cookieParser());
+const TEMPLATE_PATH:string = join(__dirname, "public");
+app.use(express.static(join(__dirname, "public")));
 
-application.get("/", (request: Request, response: Response) => {
-  response.sendFile(join(TEMPLATE_PATH, "index.html"));
+app.get("/", (req:Request, res:Response):void => {
+  res.redirect(`/${randomUUID()}`);
+});
+// If they join a specific room, then render that room
+app.get("/:room", (req:Request, res:Response):void => {
+  res.cookie("rm", req.params.room);
+  res.sendFile(join(TEMPLATE_PATH, "room.html"), { roomId: req.params.room });
 });
 
-application.get("/join/:room", (request: Request, response: Response): void => {
-  const roomId = request.params.room;
-  response.cookie("roomId", roomId);
-  response.send(roomId);
+io.on("connection", (socket:any) => {
+  socket.on("join-room", (roomId:any, userId:any) => {
+    socket.join(roomId); // Join the room
+    socket.broadcast.emit("user-connected", userId); // Tell everyone else in the room that we joined
+    console.log(userId + "someone joined " + roomId);
+    socket.on("disconnect", () => {
+      socket.broadcast.emit("user-disconnected", userId);
+    });
+  });
 });
 
-application.listen(PORT, () => {
-  console.log("Check out port " + PORT);
-});
+server.listen(3000);
